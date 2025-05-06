@@ -17,6 +17,7 @@ import { followUser } from '../services/followService';
 import { t } from '../i18n';
 import { SceneMap, TabView } from 'react-native-tab-view';
 import { useTranslation } from 'react-i18next';
+import { startConversation } from '../utils/conversation';
 
 // import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -221,7 +222,7 @@ export default function Profile() {
         style={[styles.button,  {flex: 2}]}
       >
       <TouchableOpacity >
-        <Text style={[styles.buttonText]}>{t('message')}</Text>
+        <Text style={[styles.buttonText]} onPress={() =>{startConversation(personId, null)}}>{t('message')}</Text>
       </TouchableOpacity>
       </LinearGradient>
       <View style={{flex: 0.5}}>

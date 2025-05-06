@@ -1,60 +1,184 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import Modal from 'react-native-modal';
 
-const CustomAlert = ({ type = 'info', message , duration = 1000, onHide }) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+interface CustomAlertProps {
+  title: string | null;
+  message: string;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  position?: 'middle' | 'bottom';
+  ok?: string | null;
+  cancel?: string | null;
+  cancelDisplayed?: boolean;
+  visible : boolean
+}
 
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-
-    const timer = setTimeout(() => {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        if (onHide) onHide();
-      });
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const getBackgroundColor = () => {
-    switch (type) {
-      case 'success': return '#4CAF50';
-      case 'error': return '#F44336';
-      case 'info': return '#2196F3';
-      default: return '#000';
-    }
-  };
+const CustomAlert: React.FC<CustomAlertProps> = ({
+  title,
+  message,
+  onConfirm,
+  onCancel,
+  position = 'middle',
+  ok = 'OK',
+  cancel = 'Cancel',
+  cancelDisplayed = false,
+  visible = false
+}) => {
 
   return (
-    <Animated.View style={[styles.container, { backgroundColor: getBackgroundColor(), opacity: fadeAnim }]}>
-      <Text style={styles.text}>{message}</Text>
-    </Animated.View>
+    <View>
+
+      {position == 'bottom' ?
+       (<Modal
+    isVisible={visible}
+    backdropOpacity={0.4}
+    animationIn={'slideInUp'}
+    animationOut={'slideOutDown'}
+    style={styles.bottomModal}
+    >
+      
+      <View style={styles.alertBoxb}>
+        {title && <Text style={styles.title}>{title}</Text>}
+        <Text style={styles.message}>{message}</Text>
+
+        <View style={styles.buttonContainerb}>
+          <TouchableOpacity
+            style={styles.buttonb}
+            onPress={() => {
+              onConfirm?.();
+            }}
+          >
+            {cancelDisplayed && (
+            <TouchableOpacity
+              style={[styles.buttonb, styles.cancelButtonb]}
+              onPress={() => {
+                onCancel?.();
+              }}
+            >
+              <Text style={styles.cancelTextb}>{cancel}</Text>
+            </TouchableOpacity>
+          )}
+
+          
+            <Text style={styles.confirmTextb}>{ok}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>) : (<Modal
+    isVisible={visible}
+    backdropOpacity={0.4}
+    animationIn={ 'zoomIn'}
+    animationOut={ 'zoomOut'}
+    style={ undefined}
+    >
+      
+      <View style={styles.alertBox}>
+        {title && <Text style={styles.title}>{title}</Text>}
+        <Text style={styles.message}>{message}</Text>
+
+        <View style={styles.buttonContainer}>
+          {cancelDisplayed && (
+            <TouchableOpacity
+              style={[styles.button, styles.cancelButton]}
+              onPress={() => {
+                onCancel?.();
+              }}
+            >
+              <Text style={styles.cancelText}>{cancel}</Text>
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              onConfirm?.();
+            }}
+          >
+            <Text style={styles.confirmText}>{ok}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>)}
+    </View>
+    
   );
 };
-
+export default CustomAlert;
 const styles = StyleSheet.create({
-  container: {
-    // position: 'absolute',
-    top: 50,
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  alertBox: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+    width: Dimensions.get('window').width * 0.85,
     alignSelf: 'center',
-    paddingHorizontal: 20,
+    marginBottom: 30,
+  },alertBoxb: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+    width: Dimensions.get('window').width ,
+    alignSelf: 'center',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#111',
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },buttonContainerb: {
+    flexDirection: 'column',
+    gap: 10,
+    width: "100%"
+  },
+  button: {
+    paddingHorizontal: 18,
     paddingVertical: 10,
     borderRadius: 8,
-    zIndex: 1000,
-    elevation: 5,
+    backgroundColor: '#007bff',
+  },buttonb: {
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 8,
+    width: '100%',
+    textAlign: 'center'
+   },
+  confirmText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },confirmTextb: {
+    color: '#fc0000fe',
+    fontWeight: 'bold',
+    textAlign: "center"
   },
-  text: {
-    color: '#000000',
-    fontSize: 16,
-  },
-});
+  cancelButton: {
+    backgroundColor: '#ccc',
+  },cancelButtonb: {
 
-export default CustomAlert;
+  },
+  cancelText: {
+    color: '#333',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },cancelTextb: {
+    color: '#1803ff',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+})

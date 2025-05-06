@@ -6,14 +6,16 @@ import { useNavigation } from '@react-navigation/native'; // Import navigation h
 import { useLogout } from '../utils/logout';
 import { t } from '../i18n';
 import { useTranslation } from 'react-i18next';
+import { useCustomAlert } from '../context/CustomAlertContext';
 
 
 const SettingsPage = () => {
     const { t } = useTranslation();
-
+      const [visible, setVisible] = useState(false);
     const [cacheSize, setCacheSize] = useState<number>(0);
     const navigation = useNavigation(); // Initialize navigation
     const logout = useLogout(); // Initialize logout function
+    const { showAlert } = useCustomAlert(); // Destructure the showAlert function from the context
     useEffect(() => {
         calculateCacheSize();
     }, []);
@@ -63,23 +65,10 @@ const SettingsPage = () => {
     };
 
     const handleLogout = () => {
-        if(Platform.OS === 'web') {
-            const confirmed = window.confirm('Are you sure you want to logout?');
-            if (confirmed) {
-                // Perform logout action here
-                logout()
-                console.log('Logged out');
-            
-            }
-        }else{
-        Alert.alert('Logout', 'Are you sure you want to logout?', [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Logout', onPress: () => {
-                console.log('Logged out')
-                logout()
-            } },
-        ]);
-    }
+        console.log('hi')
+        showAlert({ message: 'Are you sure you want to logout', cancel: t("cancel"), cancelDisplayed : true, position: 'bottom', onConfirm() {
+            logout()
+        }, });
     };
 
     // Function to navigate to the Languages screen

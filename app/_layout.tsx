@@ -12,6 +12,7 @@ import FloatingDraggableButton from '@/components/FloatingIcon';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { fetchUser } from './utils/user';
 import {getSocket, initiateSocket} from '@/app/utils/socket'
+import { CustomAlertProvider } from './context/CustomAlertContext';
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
 
@@ -66,6 +67,7 @@ export default function RootLayout() {
 
     <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
       <FloatingDraggableButton/>
+      <CustomAlertProvider>
       <Stack screenOptions={{ animation: 'slide_from_right', animationDuration: 500  }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_right', animationDuration: 500  }} />
         <Stack.Screen name="+not-found" options={{ headerShown: false, animation: 'slide_from_right', animationDuration: 500  }} />
@@ -76,6 +78,7 @@ export default function RootLayout() {
         <Stack.Screen name="settings" options={{ headerShown: false, animation: 'slide_from_right', animationDuration: 500 }} />
 
       </Stack>
+      </CustomAlertProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
     </GestureHandlerRootView>

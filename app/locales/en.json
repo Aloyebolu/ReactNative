@@ -1,4 +1,14 @@
 {
+
+  "E_TOO_FEW": "At least 2 participants are required",
+  "E_DUPLICATE": "Duplicate participant(s) found",
+  "E_INVALID_FORMAT": "Participants data is not valid",
+  "E_EXISTING_CONVO": "A private conversation already exists",
+  "E_SERVER_ERROR": "Something went wrong on the server",
+
+
+
+
     "welcome": "Welcome",
     "hello": "Hello",
     "goodbye": "Goodbye",
@@ -9,6 +19,8 @@
     "please": "Please",
     "yes": "Yes",
     "no": "No",
+    "ok": "Ok",
+    "cancel": "Cancel",
     "live": "Live",
     "follow": "Follow",
     "message": "Message",
@@ -62,6 +74,8 @@
     "id": "id",
     "rooms": "Rooms",
     "people": "People",
-    "reply_to": "Reply To"
+    "reply_to": "Reply To",
+    "logout_confirmation": "Are you sure you want to log out?",
+    "clear_cache_info": "Clearing cache doesn't affect your data"
   }
   

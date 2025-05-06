@@ -76,18 +76,19 @@ export default function Messages() {
   
       const currentTime = new Date(msg.created_at);
       const prevTime = prev ? new Date(prev.created_at) : null;
-  
+      const isDivisibleByPage = index % 20 === 0; // Check if the message is the first in a group of 20
+      const isFirstMessage = index === 0 || isDivisibleByPage;
       const isDifferentSender = !prev || msg.sender_id !== prev.sender_id;
       const timeGap = prevTime
         ? (currentTime - prevTime) / (1000 * 60) // in minutes
         : Infinity;
   
-      const showAvatar = isDifferentSender || timeGap >= 10;
+      const showAvatar = isDifferentSender || timeGap >= 10 || isFirstMessage ;
   
       // Calculate the time to show (null if timeGap < 10 mins)
       let time = null;
   
-      if (!prevTime || timeGap >= 10) {
+      if (!prevTime || timeGap >= 10|| isFirstMessage) {
         const now = new Date();
         const current = new Date(currentTime);
       
@@ -411,6 +412,11 @@ export default function Messages() {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
+      {loading ? (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+      </View>
+    ) : null}
 <FlatList
   inverted
   data={preparedMessages}
@@ -419,14 +425,7 @@ export default function Messages() {
   style={styles.chatArea}
   contentContainerStyle={{ padding: 10 }}
   onEndReached={!end ? () => loadMoreMessages(false) : () => {}} // Trigger loading more messages
-  onEndReachedThreshold={0.1} // Trigger when 10% of the list is visible
-  ListFooterComponent={
-    loading ? (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007bff" />
-      </View>
-    ) : null
-  } // Show loading animation
+  onEndReachedThreshold={0.3} // Trigger when 10% of the list is visible
 />
 
 
@@ -544,8 +543,9 @@ const styles = StyleSheet.create({
       borderRadius: 10,
     },
     loadingContainer: {
-      paddingVertical: 20,
+      paddingTop: 2,
       alignItems: 'center',
+      backgroundColor: 'transparent',
     },
   
 });

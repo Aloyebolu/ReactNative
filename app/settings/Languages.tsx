@@ -9,7 +9,7 @@ const Languages = () => {
 
     const languages = [
         { code: 'en', name: 'English' },
-        { code: 'cn', name: 'Chinese' },
+        { code: 'cn', name: 'Chinese(中文)' },
         { code: 'es', name: 'Spanish' },
         { code: 'fr', name: 'French' },
         { code: 'de', name: 'German' },

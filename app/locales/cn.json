@@ -1,5 +1,13 @@
 {
-    "welcome": "欢迎",
+  
+    "E_TOO_FEW": "至少需要 2 个参与者",
+    "E_DUPLICATE": "发现重复的参与者",
+    "E_INVALID_FORMAT": "参与者数据无效",
+    "E_EXISTING_CONVO": "已存在私人对话",
+    "E_SERVER_ERROR": "服务器出现问题",
+  
+  
+  "welcome": "欢迎",
     "hello": "你好",
     "goodbye": "再见",
     "thank_you": "谢谢",
