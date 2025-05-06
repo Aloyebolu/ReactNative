@@ -1,0 +1,109 @@
+{
+    "user": {
+        "name": "John Doe",
+        "age": 30,
+        "email": "aloyebolu5@gmail.com",
+        "id": "1000000010",
+        "gender": "male",
+        "country_code": "ng",
+        "description": "I'm a software engineer with a passion for building web applications. I love coding and learning new technologies. \n In my free time, I enjoy reading books and playing video games.",
+        "location": "Lagos, Nigeria",
+        "profile_picture": "https://example.com/profile.jpg",
+        "skills": [
+            "JavaScript",
+            "Python",
+            "React",
+            "Node.js",
+            "Django"
+        ],
+        "hobbies": [
+            "Reading",
+            "Gaming",
+            "Traveling",
+            "Cooking"
+        ],
+        "relations": [
+            {
+                "name": "Jane Smith",
+                "relation": "Friend",
+                "location": "New York, USA",
+                "profile_picture": "https://example.com/jane.jpg"
+            },
+            {
+                "name": "Bob Johnson",
+                "relation": "Colleague",
+                "location": "San Francisco, USA",
+                "profile_picture": "https://example.com/bob.jpg"
+            }
+        ],
+        "vip": true,
+        "verified": true,
+        "coin": 1000,
+        "early_adopter": true,
+        "vvip": true,
+        "followers": ["1000000001", "100000002", "100000003"],
+        "following": ["1000000004", "1000000005", "1000000006"],
+        "posts": [
+            {
+                "id": "1",
+                "content": "Hello, world!",
+                "timestamp": "2023-10-01T12:00:00Z",
+                "likes": 100,
+                "comments": 10,
+                "shares": 5,
+                "media": [
+                    {
+                        "type": "image",
+                        "url": "https://example.com/image1.jpg"
+                    },
+                    {
+                        "type": "video",
+                        "url": "https://example.com/video1.mp4"
+                    }
+                ]
+                }
+            ]
+    },
+    "api/user/badges/order" : {
+        "desc" : "This is to update the order of badges for a user",
+
+    "request" : {
+        "headers" : {
+            "Content-Type" : "application/json"
+        },
+        "body" : {
+            "user_id" : "1000000010",
+            "badges" : [
+                {
+                    "badge_id" : "1",
+                    "order" : 1
+                },
+                {
+                    "badge_id" : "2",
+                    "order" : 2
+                }
+            ]
+        },
+        "url" : "api/user/badges/order?user_id=1000000010",
+        "method" : "PUT"
+    },
+    "response" : {
+        "status" : 200,
+        "body" : {
+            "message" : "Badges updated successfully",
+            "badges" : [
+                {
+                    "badge_id" : "1",
+                    "order" : 1
+                },
+                {
+                    "badge_id" : "2",
+                    "order" : 2
+                }
+            ]
+        }
+    }
+    }
+    
+}
+
